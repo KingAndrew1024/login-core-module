@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { AppSettingsService } from './providers/global-params';
@@ -49,6 +49,7 @@ export class LoginCoreModule {
                 },
                 { provide: LOGIN_SERVICE, useClass: LoginService },
                 { provide: LOGIN_REPOSITORY, useClass: LoginRepository },
+                config.loginOptionsProvider,
                 LoginStore
             ]
         };
@@ -58,6 +59,6 @@ export class LoginCoreModule {
 export interface LoginModuleOptionsInterface {
     apiUrl: string;
     instanceName: string;
-    platformName: string;
+    loginOptionsProvider: Provider;
 }
 

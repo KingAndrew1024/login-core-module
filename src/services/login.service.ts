@@ -1,17 +1,15 @@
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, catchError } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { ILoginService } from './ILogin.service';
-import { LoginRepository } from '../repositories/login.repository';
-import { ILoginForm, ISaveTokenDataResponse } from '../repositories/ILogin.repository';
+import { Inject, Injectable } from '@angular/core';
+import { ILoginService, INativeStorageService, NATIVE_STORAGE_SERVICE } from './ILogin.service';
+import { ILoginForm, ILoginRepository, ISaveTokenDataResponse, LOGIN_REPOSITORY } from '../repositories/ILogin.repository';
 import { UserModel } from '../models/user.model';
-import { LocalStorageNativeService } from './LocalStorageNative.service';
 
 const helper = new JwtHelperService();
 export const TOKEN_KEY = 'AUTH_TOKEN';
 
-export function jwtOptionsFactory(localStge: LocalStorageNativeService) {
+export function jwtOptionsFactory(localStge: INativeStorageService) {
     return {
         tokenGetter: () => localStge.getItem(TOKEN_KEY)
     };
@@ -20,8 +18,9 @@ export function jwtOptionsFactory(localStge: LocalStorageNativeService) {
 @Injectable()
 export class LoginService implements ILoginService {
     constructor(
-        private localStge: LocalStorageNativeService,
-        private repository: LoginRepository) {}
+        @Inject(NATIVE_STORAGE_SERVICE) private localStge: INativeStorageService,
+        @Inject(LOGIN_REPOSITORY) private repository: ILoginRepository
+    ) {}
 
     login(credentials: ILoginForm): Observable<UserModel> {
         return this.repository.login(credentials).pipe(

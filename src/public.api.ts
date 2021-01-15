@@ -9,7 +9,6 @@ export * from './repositories/login.repository';
 
 export * from './services/ILogin.service';
 export * from './services/login.service';
-export * from './services/LocalStorageNative.service';
 
 export * from './state/login.actions';
 export * from './state/login.effects';

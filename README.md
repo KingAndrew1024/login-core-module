@@ -28,7 +28,10 @@ import { LoginCoreModule } from 'virket/login-core/dist/src';
     LoginCoreModule.forRoot({
       apiUrl: environment.apiUrl,
       instanceName: environment.instanceName,
-      platformName: 'the_platform_name'
+      loginOptionsProvider: {
+        provide: NATIVE_STORAGE_SERVICE,
+        useClass: LocalStorageNativeService //or ionic's NativeStorage class
+      },
     }),
     ...
   ],
