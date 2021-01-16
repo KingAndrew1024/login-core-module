@@ -26,7 +26,6 @@
         "coverage"
     ],
     "angularCompilerOptions": {
-        "genDir": "aot",
-        "enableIvy": false
+        "genDir": "aot"
     }
 }
